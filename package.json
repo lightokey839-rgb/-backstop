@@ -1,0 +1,43 @@
+{
+  "name": "backstop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "backend": "tsx backend/server.ts",
+    "devnet:mint": "tsx scripts/day2-real-mint.ts",
+    "devnet:refresh-snapshot": "tsx scripts/refresh-snapshot.ts",
+    "rotate:attestor": "tsx scripts/rotate-attestor.ts",
+    "reconcile": "tsx scripts/reconcile.ts",
+    "reconcile:mainnet": "tsx scripts/reconcile.ts --cluster mainnet",
+    "mock:consumer": "tsx mock-consumer/index.ts",
+    "pyth:search": "tsx scripts/pyth-lookup.ts search",
+    "pyth:price": "tsx scripts/pyth-lookup.ts price",
+    "demo:mvp": "tsx scripts/legacy/mvp-demo.ts",
+    "model:crypto": "tsx scripts/legacy/day1-cli-check.ts",
+    "model:reconcile-devnet-supply": "tsx scripts/legacy/day3-reconciliation.ts",
+    "model:adversarial": "tsx scripts/legacy/day4-adversarial.ts",
+    "test": "cargo test -p programs-backstop --lib",
+    "test:litesvm": "cargo test -p programs-backstop --test backstop_litesvm -- --nocapture",
+    "test:backend": "PRESTOCKS_CATALOG_CACHE_MS=0 node --import tsx --test backend/server.test.ts backend/integrations/pyth.test.ts backend/integrations/prestocks.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@pythnetwork/hermes-client": "^3.1.0",
+    "@solana/spl-token": "^0.4.15",
+    "@solana/web3.js": "^1.99.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}

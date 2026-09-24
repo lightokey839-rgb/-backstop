@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Rust / Anchor build output
+target/
+.anchor/
+
+# Local validator / test artifacts
+test-ledger/
+
+# TypeScript build output (unused today, but harmless to ignore)
+dist/
+build/
+
+# Secrets and machine-local config
+.env
+.env.*
+!.env.example
+*.pem
+id.json
+*-keypair.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS cruft
+.DS_Store
+.vscode/
+.idea/
+*.swp

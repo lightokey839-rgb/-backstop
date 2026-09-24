@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backstop — Asset Health</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">B</div>
+      <div>
+        <div class="brand-name">BACKSTOP</div>
+        <div class="brand-subtitle">Asset Evidence Layer</div>
+      </div>
+    </div>
+
+    <div class="network-pill">
+      <span class="status-dot"></span>
+      SOLANA DEVNET
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="eyebrow">TOKENIZED ASSET VERIFICATION</div>
+
+      <h1>Verify the health of tokenized assets.</h1>
+
+      <p class="hero-text">
+        Backstop combines on-chain facts, issuer evidence, market data,
+        identity checks and freshness into a time-bound asset health verdict.
+      </p>
+
+      <div class="flow">
+        <div class="flow-step">
+          <span>1</span>
+          <div>
+            <strong>Observe</strong>
+            <small>Collect evidence</small>
+          </div>
+        </div>
+
+        <div class="flow-line"></div>
+
+        <div class="flow-step">
+          <span>2</span>
+          <div>
+            <strong>Check</strong>
+            <small>Compare signals</small>
+          </div>
+        </div>
+
+        <div class="flow-line"></div>
+
+        <div class="flow-step">
+          <span>3</span>
+          <div>
+            <strong>Verdict</strong>
+            <small>Accept or protect</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="verify-panel">
+      <div class="section-label">VERIFY ASSET</div>
+
+      <div class="search-row">
+        <input
+          id="mintInput"
+          type="text"
+          placeholder="Paste a Solana token mint..."
+          autocomplete="off"
+        >
+
+        <button id="verifyButton" class="primary-button">
+          Verify
+        </button>
+      </div>
+
+      <div class="quick-assets">
+        <span>Demo assets:</span>
+
+        <button
+          class="quick-button"
+          data-mint="AznKjEBysg2hQXABxfquXNTTwavMz7mFMaBjYSUUX5fR"
+        >
+          TSLA
+        </button>
+
+        <button
+          class="quick-button"
+          data-mint="PreweJYECqtQwBtpxHL171nL2K6umo692gTm7Q3rpgF"
+        >
+          OPENAI PreStocks
+        </button>
+      </div>
+
+      <div id="errorBox" class="error-box hidden"></div>
+    </section>
+
+    <section id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <span>Collecting evidence...</span>
+    </section>
+
+    <section id="dashboard" class="dashboard hidden">
+
+      <div class="asset-header">
+        <div>
+          <div class="section-label">ASSET</div>
+          <h2 id="assetName">—</h2>
+          <div id="assetMint" class="mint-address">—</div>
+        </div>
+
+        <div id="verdictBadge" class="verdict-badge">
+          UNKNOWN
+        </div>
+      </div>
+
+      <div class="verdict-panel">
+        <div class="verdict-title">
+          <span id="verdictIcon">●</span>
+          <span id="verdictText">UNKNOWN</span>
+        </div>
+
+        <p id="verdictSummary">
+          No verification result yet.
+        </p>
+
+        <div id="verdictReasons" class="reasons"></div>
+      </div>
+
+      <div class="cards-grid">
+
+        <!-- BACKSTOP -->
+        <article class="evidence-card">
+          <div class="card-header">
+            <div>
+              <div class="card-kicker">ON-CHAIN HEALTH</div>
+              <h3>Backstop</h3>
+            </div>
+
+            <span id="backstopStatus" class="evidence-status">
+              UNKNOWN
+            </span>
+          </div>
+
+          <p id="backstopDetail" class="card-detail">
+            Waiting for evidence.
+          </p>
+
+          <div class="metrics">
+            <div class="metric">
+              <span>Live supply</span>
+              <strong id="liveSupply">—</strong>
+            </div>
+
+            <div class="metric">
+              <span>Attested backing</span>
+              <strong id="attestedBacking">—</strong>
+            </div>
+
+            <div class="metric">
+              <span>Coverage</span>
+              <strong id="coverage">—</strong>
+            </div>
+          </div>
+
+          <div class="checks">
+            <div>
+              <span>Snapshot verified</span>
+              <strong id="snapshotVerified">—</strong>
+            </div>
+
+            <div>
+              <span>Fresh</span>
+              <strong id="backstopFresh">—</strong>
+            </div>
+
+            <div>
+              <span>Supply within backing</span>
+              <strong id="supplyWithinBacking">—</strong>
+            </div>
+
+            <div>
+              <span>Registry match</span>
+              <strong id="registryMatches">—</strong>
+            </div>
+
+            <div>
+              <span>Mint match</span>
+              <strong id="mintMatches">—</strong>
+            </div>
+          </div>
+        </article>
+
+        <!-- PYTH -->
+        <article class="evidence-card">
+          <div class="card-header">
+            <div>
+              <div class="card-kicker">MARKET EVIDENCE</div>
+              <h3>Pyth</h3>
+            </div>
+
+            <span id="pythStatus" class="evidence-status">
+              UNKNOWN
+            </span>
+          </div>
+
+          <p id="pythDetail" class="card-detail">
+            Waiting for market evidence.
+          </p>
+
+          <div class="price-display">
+            <span>Observed price</span>
+            <strong id="pythPrice">—</strong>
+          </div>
+
+          <div class="metrics">
+            <div class="metric">
+              <span>Confidence</span>
+              <strong id="pythConfidence">—</strong>
+            </div>
+
+            <div class="metric">
+              <span>Exponent</span>
+              <strong id="pythExponent">—</strong>
+            </div>
+          </div>
+
+          <div class="checks">
+            <div>
+              <span>Fresh</span>
+              <strong id="pythFresh">—</strong>
+            </div>
+
+            <div>
+              <span>Confidence acceptable</span>
+              <strong id="pythConfidenceCheck">—</strong>
+            </div>
+
+            <div>
+              <span>Usable</span>
+              <strong id="pythUsable">—</strong>
+            </div>
+          </div>
+        </article>
+
+        <!-- PRESTOCKS -->
+        <article class="evidence-card">
+          <div class="card-header">
+            <div>
+              <div class="card-kicker">PRE-IPO EVIDENCE</div>
+              <h3>PreStocks</h3>
+            </div>
+
+            <span id="prestocksStatus" class="evidence-status">
+              UNKNOWN
+            </span>
+          </div>
+
+          <p id="prestocksDetail" class="card-detail">
+            Waiting for PreStocks evidence.
+          </p>
+
+          <div class="price-display">
+            <span>Mark price</span>
+            <strong id="prestocksPrice">—</strong>
+          </div>
+
+          <div class="metrics">
+            <div class="metric">
+              <span>Token price</span>
+              <strong id="prestocksTokenPrice">—</strong>
+            </div>
+
+            <div class="metric">
+              <span>Network</span>
+              <strong id="prestocksNetwork">—</strong>
+            </div>
+          </div>
+
+          <div class="identity-row">
+            <span>Name</span>
+            <strong id="prestocksName">—</strong>
+          </div>
+        </article>
+
+        <!-- SOLANA -->
+        <article class="evidence-card">
+          <div class="card-header">
+            <div>
+              <div class="card-kicker">TOKEN IDENTITY</div>
+              <h3>Solana</h3>
+            </div>
+
+            <span id="solanaStatus" class="evidence-status">
+              UNKNOWN
+            </span>
+          </div>
+
+          <p id="solanaDetail" class="card-detail">
+            Waiting for Solana identity evidence.
+          </p>
+
+          <div class="identity-row">
+            <span>Network</span>
+            <strong id="solanaNetwork">—</strong>
+          </div>
+
+          <div class="identity-row">
+            <span>Program</span>
+            <strong id="solanaProgram">—</strong>
+          </div>
+
+          <div class="identity-row">
+            <span>Decimals</span>
+            <strong id="solanaDecimals">—</strong>
+          </div>
+
+          <div class="identity-row">
+            <span>Expected symbol</span>
+            <strong id="solanaSymbol">—</strong>
+          </div>
+        </article>
+
+      </div>
+
+      <section class="evidence-summary">
+        <div class="section-label">EVIDENCE SUMMARY</div>
+
+        <div id="evidenceSummary" class="summary-list"></div>
+      </section>
+
+      <section class="raw-section">
+        <button id="rawToggle" class="secondary-button">
+          Show raw evidence
+        </button>
+
+        <pre id="rawEvidence" class="raw-evidence hidden"></pre>
+      </section>
+
+    </section>
+
+    <section class="explanation">
+      <div class="section-label">WHAT BACKSTOP DOES</div>
+
+      <div class="explanation-grid">
+        <div>
+          <h3>Backstop</h3>
+          <p>
+            Checks the asset's registered identity, snapshot health,
+            supply, backing and freshness.
+          </p>
+        </div>
+
+        <div>
+          <h3>Market data</h3>
+          <p>
+            Optional market evidence such as Pyth can corroborate the
+            asset's observable market price.
+          </p>
+        </div>
+
+        <div>
+          <h3>External assets</h3>
+          <p>
+            PreStocks assets can be checked against their published
+            identity and machine-readable market data.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>BACKSTOP</span>
+    <span>Evidence before acceptance.</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
