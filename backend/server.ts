@@ -630,6 +630,15 @@ async function serveFrontendFile(
 }
 
 const server = http.createServer(async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://backstop-blue.vercel.app");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Accept, Content-Type");
+
+  if (req.method === "OPTIONS") {
+    res.writeHead(204);
+    return res.end();
+  }
+
   try {
     const url = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
 
