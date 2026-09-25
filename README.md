@@ -19,6 +19,15 @@ Backstop combines:
 Backstop is designed for the infrastructure layer underneath lending, trading, collateral, portfolio, and other Solana applications.
 
 ---
+## Why We Created Backstop
+
+Tokenized assets can make real-world financial exposure available on Solana, but an application still needs to answer a basic question before accepting one: **what evidence do we actually have that this asset is what it claims to be, and is that evidence healthy and current?**
+
+A token can exist on-chain, have a market price, and look completely normal while important evidence is still missing, stale, or inconsistent. We created Backstop to give Solana applications a structured way to examine that evidence before they accept an asset. Backstop checks observable on-chain facts, asset identity, registry and snapshot state, freshness, supply versus attested backing, and relevant external evidence, then turns those checks into a time-bound verdict.
+
+The goal is not to claim that Backstop can prove physical ownership of real-world assets. It cannot. Instead, Backstop makes the **available evidence and its limitations explicit**. When the evidence supports the expected state, an application can see `VERIFIED`. When important evidence is missing or does not apply, Backstop can return `WARNING`, `UNKNOWN`, or `NOT_APPLICABLE` instead of creating false certainty.
+
+This is especially useful as tokenized stocks and other real-world assets become more common on Solana. Applications should not have to blindly trust a token simply because it exists on-chain. **Backstop was created to give them evidence before acceptance.**
 
 ## The problem
 
