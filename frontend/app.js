@@ -487,7 +487,7 @@ async function verifyAsset(mint) {
 
   try {
     const response = await fetch(
-      `/assets/${encodeURIComponent(cleanMint)}/evidence`,
+      `https://backstop-ysx4.onrender.com/assets/${encodeURIComponent(cleanMint)}/evidence`,
       {
         headers: {
           Accept: "application/json"
@@ -572,7 +572,7 @@ rawToggle.addEventListener("click", () => {
 
 async function checkHealth() {
   try {
-    const response = await fetch("/health");
+    const response = await fetch("https://backstop-ysx4.onrender.com/health");
 
     if (!response.ok) {
       throw new Error("Backend health check failed");
